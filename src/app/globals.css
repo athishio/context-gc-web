@@ -1,0 +1,205 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-brand-blue: #4285F4;
+  --color-brand-green: #34A853;
+  --color-brand-yellow: #FBBC05;
+  --color-brand-red: #EA4335;
+  
+  --color-bg-space: transparent;
+  --color-bg-band: transparent;
+  --color-text-primary: #0A0A0A;
+  --color-text-muted: #5F6368;
+  --color-border-subtle: rgba(0, 0, 0, 0.08);
+  
+  --font-sans: var(--font-inter);
+  --font-display: var(--font-inter);
+  --font-mono: var(--font-jetbrains-mono);
+}
+
+:root {
+  --background: transparent;
+  --foreground: #0A0A0A;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 80px;
+  background-color: transparent;
+  color: #0A0A0A;
+}
+
+body {
+  margin: 0;
+  background-color: transparent;
+  color: #0A0A0A;
+  overflow-x: hidden;
+}
+
+/* Faint ambient gray dots background texture */
+.ambient-dots {
+  background-image: radial-gradient(rgba(0, 0, 0, 0.04) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+/* Dotted constellation border card styles (individual dots rendering in outline) */
+.constellation-card {
+  position: relative;
+  background: #FFFFFF;
+  border-radius: 12px;
+}
+
+.constellation-dots {
+  position: absolute;
+  inset: -1px;
+  pointer-events: none;
+  border-radius: 12px;
+  background-image: 
+    radial-gradient(circle, #4285F4 1px, transparent 1px),
+    radial-gradient(circle, #4285F4 1px, transparent 1px);
+  background-size: 8px 8px;
+  background-repeat: repeat-x, repeat-y;
+  mask-image: radial-gradient(circle, black, transparent);
+  opacity: 0.25;
+}
+
+/* Soft, low-saturation pastel gradient spotlight halos */
+.gradient-halo {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(80px);
+  opacity: 0.12;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Code screenshot frame container - dark content inside light container */
+.screenshot-container {
+  background: #FFFFFF;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+  overflow: hidden;
+}
+
+/* Code blocks in light mode */
+pre {
+  background: #F8F9FA !important;
+  font-family: var(--font-jetbrains-mono), monospace;
+}
+
+/* Hero particle burst animation */
+@keyframes particle-burst-out {
+  from {
+    transform: translate(0, 0) scale(0.2);
+    opacity: 0;
+  }
+  to {
+    transform: translate(var(--tw-x), var(--tw-y)) scale(1);
+    opacity: 0.65;
+  }
+}
+
+/* Dotted constellation shimmer effect */
+@keyframes dot-shimmer {
+  0%, 100% {
+    opacity: 0.2;
+  }
+  50% {
+    opacity: 0.55;
+  }
+}
+
+.animate-shimmer-dot {
+  animation: dot-shimmer 4s ease-in-out infinite;
+}
+
+/* Sequential pipeline node opacity reveal */
+@keyframes pipeline-draw {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animate-pipeline-node {
+  animation: pipeline-draw 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Blinking rainbow gradient cursor detail */
+@keyframes cursor-blink-rainbow {
+  0%, 100% {
+    background-color: #4285F4;
+    opacity: 1;
+  }
+  25% {
+    background-color: #34A853;
+  }
+  50% {
+    background-color: #FBBC05;
+    opacity: 0;
+  }
+  75% {
+    background-color: #EA4335;
+  }
+}
+
+.rainbow-cursor {
+  width: 2px;
+  height: 1.1em;
+  display: inline-block;
+  vertical-align: middle;
+  animation: cursor-blink-rainbow 1.5s infinite;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #FFFFFF;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.08);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.16);
+}
+
+/* Global premium transitions easing and duration */
+.transition-motion {
+  transition-property: transform, opacity, background-color, border-color, box-shadow;
+  transition-duration: 350ms;
+  transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.transition-motion-fast {
+  transition-property: transform, opacity, background-color, border-color, box-shadow;
+  transition-duration: 200ms;
+  transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Cursor hiding utility for fine pointer controls */
+@media (pointer: fine) {
+  .custom-cursor-active,
+  .custom-cursor-active a,
+  .custom-cursor-active button,
+  .custom-cursor-active [role="button"],
+  .custom-cursor-active .cursor-pointer {
+    cursor: none !important;
+  }
+}
+
