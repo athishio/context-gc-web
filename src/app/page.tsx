@@ -1054,6 +1054,7 @@ e002 [decision] B -> parent A`,
 
 export default function ContextGcWebsite() {
   const [stars, setStars] = useState<number | string>("...");
+  const [forks, setForks] = useState<number | string>("...");
   const [heroCopied, setHeroCopied] = useState(false);
   const [ctaCopied, setCtaCopied] = useState(false);
   const [codeTab, setCodeTab] = useState<"incremental" | "single-shot">("incremental");
@@ -1112,20 +1113,30 @@ export default function ContextGcWebsite() {
     return () => mediaQuery.removeEventListener("change", listener);
   }, []);
 
-  // Fetch live star count from Athish M's context-gc repo
+  // Fetch live star and fork counts from Athish M's context-gc repo, polling every 10 seconds for real-time updates
   useEffect(() => {
-    fetch("https://api.github.com/repos/athishio/context-gc")
-      .then((res) => res.json())
-      .then((data) => {
-        if (data && typeof data.stargazers_count === "number") {
-          setStars(data.stargazers_count);
-        } else {
-          setStars(0);
-        }
-      })
-      .catch(() => {
-        setStars(0);
-      });
+    const fetchStats = () => {
+      fetch("https://api.github.com/repos/athishio/context-gc")
+        .then((res) => res.json())
+        .then((data) => {
+          if (data) {
+            if (typeof data.stargazers_count === "number") {
+              setStars(data.stargazers_count);
+            }
+            if (typeof data.forks_count === "number") {
+              setForks(data.forks_count);
+            }
+          }
+        })
+        .catch(() => {
+          setStars((prev) => (prev === "..." ? 0 : prev));
+          setForks((prev) => (prev === "..." ? 0 : prev));
+        });
+    };
+
+    fetchStats();
+    const interval = setInterval(fetchStats, 10000);
+    return () => clearInterval(interval);
   }, []);
 
   // Typewriter automation effect triggered on mount/reset
@@ -1555,18 +1566,41 @@ print(result["prompt"])`;
       <section className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-16 border-t border-border-subtle">
         
         {/* Stat strip row - No cards or backgrounds */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-16 text-center">
-          <div className="p-2">
-            <span className="block text-4xl sm:text-6xl font-display font-extrabold text-[#0A0A0A] tracking-tight">
-              {stars}
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 sm:gap-6 mb-16 text-center">
+          <div className="p-2 flex flex-col items-center justify-center">
+            <span className="block text-4xl sm:text-6xl font-display font-extrabold text-[#0A0A0A] tracking-tight min-h-[40px] sm:min-h-[60px] flex items-center justify-center">
+              <motion.span
+                key={stars}
+                initial={{ scale: 0.8, opacity: 0.5 }}
+                animate={{ scale: [1.2, 1], opacity: 1 }}
+                transition={{ duration: 0.45, ease: "easeOut" }}
+              >
+                {stars}
+              </motion.span>
             </span>
             <span className="block text-[10px] sm:text-xs font-bold uppercase tracking-widest text-[#5F6368] mt-2 font-mono">
               GitHub Stars
             </span>
           </div>
 
-          <div className="p-2">
-            <span className="block text-4xl sm:text-6xl font-display font-extrabold text-[#0A0A0A] tracking-tight">
+          <div className="p-2 flex flex-col items-center justify-center">
+            <span className="block text-4xl sm:text-6xl font-display font-extrabold text-[#0A0A0A] tracking-tight min-h-[40px] sm:min-h-[60px] flex items-center justify-center">
+              <motion.span
+                key={forks}
+                initial={{ scale: 0.8, opacity: 0.5 }}
+                animate={{ scale: [1.2, 1], opacity: 1 }}
+                transition={{ duration: 0.45, ease: "easeOut" }}
+              >
+                {forks}
+              </motion.span>
+            </span>
+            <span className="block text-[10px] sm:text-xs font-bold uppercase tracking-widest text-[#5F6368] mt-2 font-mono">
+              GitHub Forks
+            </span>
+          </div>
+
+          <div className="p-2 flex flex-col items-center justify-center">
+            <span className="block text-4xl sm:text-6xl font-display font-extrabold text-[#0A0A0A] tracking-tight min-h-[40px] sm:min-h-[60px] flex items-center justify-center">
               MIT
             </span>
             <span className="block text-[10px] sm:text-xs font-bold uppercase tracking-widest text-[#5F6368] mt-2 font-mono">
@@ -1574,8 +1608,8 @@ print(result["prompt"])`;
             </span>
           </div>
 
-          <div className="p-2">
-            <span className="block text-4xl sm:text-6xl font-display font-extrabold text-[#0A0A0A] tracking-tight">
+          <div className="p-2 flex flex-col items-center justify-center">
+            <span className="block text-4xl sm:text-6xl font-display font-extrabold text-[#0A0A0A] tracking-tight min-h-[40px] sm:min-h-[60px] flex items-center justify-center">
               Python
             </span>
             <span className="block text-[10px] sm:text-xs font-bold uppercase tracking-widest text-[#5F6368] mt-2 font-mono">
@@ -1583,8 +1617,8 @@ print(result["prompt"])`;
             </span>
           </div>
 
-          <div className="p-2">
-            <span className="block text-4xl sm:text-6xl font-display font-extrabold text-[#0A0A0A] tracking-tight">
+          <div className="p-2 flex flex-col items-center justify-center">
+            <span className="block text-4xl sm:text-6xl font-display font-extrabold text-[#0A0A0A] tracking-tight min-h-[40px] sm:min-h-[60px] flex items-center justify-center">
               Zero
             </span>
             <span className="block text-[10px] sm:text-xs font-bold uppercase tracking-widest text-[#5F6368] mt-2 font-mono">
