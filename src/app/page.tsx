@@ -1523,7 +1523,7 @@ print(result["prompt"])`;
               {heroCopied ? (
                 <>
                   <Check className="w-3.5 h-3.5 text-brand-blue" />
-                  <span className="text-brand-blue font-bold">✓ Copied</span>
+                  <span className="text-brand-blue font-bold">Copied</span>
                 </>
               ) : (
                 <>
@@ -1899,7 +1899,7 @@ print(result["prompt"])`;
                 {codeCopied ? (
                   <>
                     <Check className="w-4 h-4 text-brand-blue" />
-                    <span className="text-brand-blue font-bold">✓ Copied</span>
+                    <span className="text-brand-blue font-bold">Copied</span>
                   </>
                 ) : (
                   <>
