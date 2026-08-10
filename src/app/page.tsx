@@ -1651,7 +1651,7 @@ print(result["prompt"])`;
           <div className="text-center max-w-3xl mx-auto mb-16">
             <span className="text-xs font-mono font-bold uppercase tracking-wider text-brand-blue">Core Engine</span>
             <h2 className="text-4xl sm:text-5xl font-display font-extrabold text-[#0A0A0A] tracking-tight mt-2 mb-4">
-              One Compaction Pass.{"\n"}Nothing Lost.
+              One Compaction Pass<br />Nothing Lost
             </h2>
             <p className="text-[#5F6368] text-sm sm:text-base font-sans">
               Context-GC executes 4 deterministic stages locally, transforming execution graphs into clean, compacted prompt output.
