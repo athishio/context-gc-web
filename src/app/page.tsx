@@ -2568,18 +2568,18 @@ print(result["prompt"])`;
             <div className="p-6 rounded-lg bg-white border border-border-subtle hover:border-black/16 hover:-translate-y-0.5 transition-all duration-300 flex flex-col items-center shadow-sm">
               <div className="relative w-16 h-16 rounded-full border border-border-subtle overflow-hidden mb-4 bg-slate-100 flex items-center justify-center">
                 <img
-                  src="https://github.com/kamalesh57.png"
+                  src="https://github.com/kamaleshio.png"
                   alt="Kamalesh T GitHub Avatar"
                   className="w-full h-full object-cover"
                   onError={(e) => {
-                    e.currentTarget.src = "https://github.com/identicons/kamalesh57.png";
+                    e.currentTarget.src = "https://github.com/identicons/kamaleshio.png";
                   }}
                 />
               </div>
               <h3 className="font-display font-bold text-base text-[#0A0A0A] mb-1">Kamalesh T</h3>
-              <p className="text-text-muted text-[10px] font-mono mb-3">@kamalesh57 • Maintainer</p>
+              <p className="text-text-muted text-[10px] font-mono mb-3">@kamaleshio • Maintainer</p>
               <a
-                href="https://github.com/kamalesh57"
+                href="https://github.com/kamaleshio"
                 target="_blank"
                 rel="noreferrer"
                 className="mt-auto w-full py-2.5 bg-[#0A0A0A] hover:bg-slate-800 font-semibold text-xs rounded-full transition-all duration-300 flex items-center justify-center gap-2 text-white"
