@@ -15,7 +15,7 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Context-GC — Deterministic Context Compaction for AI Agents",
+  title: "Context-GC",
   description: "Context-GC is a zero-dependency Python library that deterministically prunes and compacts AI agent execution traces, with every pruned event recoverable via receipts.",
   keywords: ["Context-GC", "AI Agents", "Context Compaction", "LLM History Compression", "Deterministic GC", "Graph Pruning", "Python Library"],
   authors: [{ name: "Athish M" }],
@@ -25,7 +25,7 @@ export const metadata: Metadata = {
     apple: "/logo.png",
   },
   openGraph: {
-    title: "Context-GC — Deterministic Context Compaction for AI Agents",
+    title: "Context-GC",
     description: "Context-GC is a zero-dependency Python library that deterministically prunes and compacts AI agent execution traces, with every pruned event recoverable via receipts.",
     type: "website",
   },
