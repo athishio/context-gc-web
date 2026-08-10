@@ -1113,29 +1113,105 @@ export default function ContextGcWebsite() {
     return () => mediaQuery.removeEventListener("change", listener);
   }, []);
 
-  // Fetch live star and fork counts from Athish M's context-gc repo, polling every 10 seconds for real-time updates
+  // Fetch live star and fork counts from Athish M's context-gc repo, polling every 2 minutes for real-time updates with caching and rate limit safety
   useEffect(() => {
-    const fetchStats = () => {
-      fetch("https://api.github.com/repos/athishio/context-gc")
-        .then((res) => res.json())
-        .then((data) => {
-          if (data) {
-            if (typeof data.stargazers_count === "number") {
-              setStars(data.stargazers_count);
-            }
-            if (typeof data.forks_count === "number") {
-              setForks(data.forks_count);
-            }
+    if (typeof window === "undefined") return;
+
+    const CACHE_KEY = "context_gc_stats";
+    const POLLING_INTERVAL_MS = 120000; // 2 minutes
+
+    // Read cache helper
+    const getCachedStats = () => {
+      try {
+        const cached = localStorage.getItem(CACHE_KEY);
+        if (cached) {
+          const parsed = JSON.parse(cached);
+          if (parsed && typeof parsed.stars === "number" && typeof parsed.forks === "number" && typeof parsed.fetchedAt === "number") {
+            return parsed;
           }
-        })
-        .catch(() => {
-          setStars((prev) => (prev === "..." ? 0 : prev));
-          setForks((prev) => (prev === "..." ? 0 : prev));
-        });
+        }
+      } catch (e) {
+        console.warn("Failed to read from localStorage:", e);
+      }
+      return null;
     };
 
-    fetchStats();
-    const interval = setInterval(fetchStats, 10000);
+    // Load initial values from cache if possible
+    const cachedStats = getCachedStats();
+    if (cachedStats) {
+      setStars(cachedStats.stars);
+      setForks(cachedStats.forks);
+    }
+
+    const fetchStats = async () => {
+      // Check if cache is still fresh
+      const currentCache = getCachedStats();
+      if (currentCache) {
+        const age = Date.now() - currentCache.fetchedAt;
+        if (age < POLLING_INTERVAL_MS) {
+          // Cache is fresh, skip fetch
+          return;
+        }
+      }
+
+      try {
+        const response = await fetch("https://api.github.com/repos/athishio/context-gc");
+        
+        // Handle rate limit checks via headers
+        const remaining = response.headers.get("X-RateLimit-Remaining");
+        if (remaining !== null && parseInt(remaining, 10) === 0) {
+          console.warn("GitHub API rate limit exceeded. Skipping this fetch attempt.");
+          return;
+        }
+
+        if (!response.ok) {
+          throw new Error(`GitHub API request failed with status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        if (data && typeof data.stargazers_count === "number" && typeof data.forks_count === "number") {
+          const newStars = data.stargazers_count;
+          const newForks = data.forks_count;
+          
+          setStars(newStars);
+          setForks(newForks);
+
+          // Write to cache
+          try {
+            localStorage.setItem(CACHE_KEY, JSON.stringify({
+              stars: newStars,
+              forks: newForks,
+              fetchedAt: Date.now()
+            }));
+          } catch (e) {
+            console.warn("Failed to write to localStorage:", e);
+          }
+        }
+      } catch (err) {
+        console.warn("Error fetching GitHub stats:", err);
+        // Fallback: if state is still "...", use cached stats (even if stale) or set fallback 0
+        setStars((prev) => {
+          if (prev === "...") {
+            return cachedStats ? cachedStats.stars : 0;
+          }
+          return prev;
+        });
+        setForks((prev) => {
+          if (prev === "...") {
+            return cachedStats ? cachedStats.forks : 0;
+          }
+          return prev;
+        });
+      }
+    };
+
+    // If cache is missing or stale, fetch immediately. Otherwise wait for interval.
+    const shouldFetchImmediately = !cachedStats || (Date.now() - cachedStats.fetchedAt >= POLLING_INTERVAL_MS);
+    if (shouldFetchImmediately) {
+      fetchStats();
+    }
+
+    const interval = setInterval(fetchStats, POLLING_INTERVAL_MS);
     return () => clearInterval(interval);
   }, []);
 
