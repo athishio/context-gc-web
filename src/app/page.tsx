@@ -528,7 +528,7 @@ function ProblemSection() {
         <div className="text-center max-w-3xl mx-auto mb-16">
           <span className="text-xs font-mono font-bold uppercase tracking-wider text-brand-blue">The Scaling Problem</span>
           <h2 className="text-4xl sm:text-5xl font-display font-extrabold text-text-primary tracking-tight mt-2 mb-4">
-            Agent Traces Grow Forever.
+            Agent Traces Grow Forever
           </h2>
           <p className="text-text-muted text-sm sm:text-base leading-relaxed font-sans">
             As LLM agents loop to solve complex tasks, tool outputs, aborted logs, and temporary state mutations accumulate. Prompts hit context limits, prompts trigger high latency, and LLM confusion increases.
@@ -1735,7 +1735,7 @@ print(result["prompt"])`;
           <div className="text-center max-w-3xl mx-auto mb-16">
             <span className="text-xs font-mono font-bold uppercase tracking-wider text-brand-blue">Capabilities</span>
             <h2 className="text-4xl sm:text-5xl font-display font-extrabold text-[#0A0A0A] tracking-tight mt-2 mb-4">
-              Engineered for Precision.
+              Engineered for Precision
             </h2>
             <p className="text-[#5F6368] text-sm sm:text-base">
               Context-GC bypasses lossy summaries. Every pruned byte remains retrievable.
@@ -1856,7 +1856,7 @@ print(result["prompt"])`;
           <div className="text-center max-w-3xl mx-auto mb-16">
             <span className="text-xs font-mono font-bold uppercase tracking-wider text-brand-blue">Usage</span>
             <h2 className="text-4xl sm:text-5xl font-display font-extrabold text-[#0A0A0A] tracking-tight mt-2 mb-4">
-              Zero Complexity Integration.
+              Zero Complexity Integration
             </h2>
             <p className="text-[#5F6368] text-sm sm:text-base">
               Drop context compaction directly into python loops. Code is 100% Python.
@@ -1926,7 +1926,7 @@ print(result["prompt"])`;
           <div className="text-center max-w-3xl mx-auto mb-16">
             <span className="text-xs font-mono font-bold uppercase tracking-wider text-brand-blue">Pipeline Workflow</span>
             <h2 className="text-4xl sm:text-5xl font-display font-extrabold text-[#0A0A0A] tracking-tight mt-2 mb-4">
-              A Linear, Deterministic Pipeline.
+              A Linear, Deterministic Pipeline
             </h2>
             <p className="text-[#5F6368] text-sm sm:text-base">
               Hover over each element below to inspect the stages of compilation.
@@ -2070,7 +2070,7 @@ print(result["prompt"])`;
           <div className="text-center max-w-3xl mx-auto mb-16">
             <span className="text-xs font-mono font-bold uppercase tracking-wider text-brand-blue">Performance</span>
             <h2 className="text-4xl sm:text-5xl font-display font-extrabold text-[#0A0A0A] tracking-tight mt-2 mb-4">
-              Real Data, No Hype.
+              Real Data, No Hype
             </h2>
             <p className="text-[#5F6368] text-sm sm:text-base leading-relaxed">
               Context-GC does not compete with hosted vector DBs or lose content. Below are literal benchmark statistics across different trace sizes.
@@ -2298,7 +2298,7 @@ print(result["prompt"])`;
           <div className="text-center max-w-3xl mx-auto mb-16">
             <span className="text-xs font-mono font-bold uppercase tracking-wider text-brand-blue">Comparison Matrix</span>
             <h2 className="text-4xl sm:text-5xl font-display font-extrabold text-[#0A0A0A] tracking-tight mt-2 mb-4">
-              How Context-GC Compares.
+              How Context-GC Compares
             </h2>
             <p className="text-[#5F6368] text-sm sm:text-base">
               Detailed, honest comparisons with alternate agentic memory architectures.
@@ -2357,7 +2357,7 @@ print(result["prompt"])`;
           <div className="text-center max-w-3xl mx-auto mb-16">
             <span className="text-xs font-mono font-bold uppercase tracking-wider text-brand-blue">Developer Experience</span>
             <h2 className="text-4xl sm:text-5xl font-display font-extrabold text-[#0A0A0A] tracking-tight mt-2 mb-4">
-              Simple Execution Loop.
+              Simple Execution Loop
             </h2>
             <p className="text-[#5F6368] text-sm sm:text-base">
               No complex setup scripts. Just pip install and import client modules inside Python.
