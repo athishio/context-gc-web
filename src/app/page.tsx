@@ -2647,7 +2647,7 @@ print(result["prompt"])`;
               Built in the Open
             </h2>
             <p className="text-[#5F6368] text-xs sm:text-sm mt-2 font-sans max-w-md mx-auto">
-              Context-GC is maintained on GitHub by athishio.
+              Context-GC is maintained on GitHub by the developers below.
             </p>
           </div>
           
