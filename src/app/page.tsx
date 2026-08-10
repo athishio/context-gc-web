@@ -1528,7 +1528,7 @@ print(result["prompt"])`;
               ) : (
                 <>
                   <Copy className="w-3.5 h-3.5" />
-                  <span>[ Copy ]</span>
+                  <span>Copy</span>
                 </>
               )}
             </button>
@@ -2672,7 +2672,7 @@ print(result["prompt"])`;
                 >
                   <span>pip install context-gc</span>
                   <span className="text-[10px] text-brand-blue font-bold uppercase">
-                    {ctaCopied ? "✓ Copied" : "[ Copy ]"}
+                    {ctaCopied ? "✓ Copied" : "Copy"}
                   </span>
                 </div>
                 <motion.button 
