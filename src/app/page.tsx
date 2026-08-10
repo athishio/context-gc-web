@@ -1526,10 +1526,7 @@ print(result["prompt"])`;
                   <span className="text-brand-blue font-bold">Copied</span>
                 </>
               ) : (
-                <>
-                  <Copy className="w-3.5 h-3.5" />
-                  <span>Copy</span>
-                </>
+                <span>[ Copy ]</span>
               )}
             </button>
           </div>
@@ -1902,10 +1899,7 @@ print(result["prompt"])`;
                     <span className="text-brand-blue font-bold">Copied</span>
                   </>
                 ) : (
-                  <>
-                    <Copy className="w-4 h-4" />
-                    <span>Copy code</span>
-                  </>
+                  <span>[ Copy code ]</span>
                 )}
               </button>
             </div>
@@ -2671,9 +2665,16 @@ print(result["prompt"])`;
                   className="w-full bg-slate-50 hover:bg-slate-100/70 border border-border-subtle p-3 rounded-full font-mono text-[11px] text-[#0A0A0A] flex justify-between items-center px-4 cursor-pointer transition-all duration-200 select-none"
                 >
                   <span>pip install context-gc</span>
-                  <span className="text-[10px] text-brand-blue font-bold uppercase">
-                    {ctaCopied ? "✓ Copied" : "Copy"}
-                  </span>
+                  {ctaCopied ? (
+                    <span className="text-[10px] text-brand-blue font-bold uppercase flex items-center gap-1">
+                      <Check className="w-3.5 h-3.5 text-brand-blue" />
+                      <span>Copied</span>
+                    </span>
+                  ) : (
+                    <span className="text-[10px] text-brand-blue font-bold uppercase">
+                      [ Copy ]
+                    </span>
+                  )}
                 </div>
                 <motion.button 
                   onClick={() => scrollToSection("code-sandbox")}
