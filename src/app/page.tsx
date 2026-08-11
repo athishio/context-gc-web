@@ -1642,9 +1642,9 @@ print(result["prompt"])`;
       <section className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-16 border-t border-border-subtle">
         
         {/* Stat strip row - No cards or backgrounds */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 sm:gap-6 mb-16 text-center">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 sm:gap-6 lg:gap-8 xl:gap-12 mb-16 text-center">
           <div className="p-2 flex flex-col items-center justify-center">
-            <span className="block text-4xl sm:text-6xl font-display font-extrabold text-[#0A0A0A] tracking-tight min-h-[40px] sm:min-h-[60px] flex items-center justify-center">
+            <span className="block text-3xl sm:text-5xl lg:text-4xl xl:text-5xl font-display font-extrabold text-[#0A0A0A] tracking-tight min-h-[40px] sm:min-h-[60px] flex items-center justify-center">
               <motion.span
                 key={stars}
                 initial={{ scale: 0.8, opacity: 0.5 }}
@@ -1660,7 +1660,7 @@ print(result["prompt"])`;
           </div>
 
           <div className="p-2 flex flex-col items-center justify-center">
-            <span className="block text-4xl sm:text-6xl font-display font-extrabold text-[#0A0A0A] tracking-tight min-h-[40px] sm:min-h-[60px] flex items-center justify-center">
+            <span className="block text-3xl sm:text-5xl lg:text-4xl xl:text-5xl font-display font-extrabold text-[#0A0A0A] tracking-tight min-h-[40px] sm:min-h-[60px] flex items-center justify-center">
               <motion.span
                 key={forks}
                 initial={{ scale: 0.8, opacity: 0.5 }}
@@ -1676,7 +1676,7 @@ print(result["prompt"])`;
           </div>
 
           <div className="p-2 flex flex-col items-center justify-center">
-            <span className="block text-3xl sm:text-5xl font-display font-extrabold text-[#0A0A0A] tracking-tight min-h-[40px] sm:min-h-[60px] flex items-center justify-center whitespace-nowrap">
+            <span className="block text-xl sm:text-3xl lg:text-2xl xl:text-3xl font-display font-extrabold text-[#0A0A0A] tracking-tight min-h-[40px] sm:min-h-[60px] flex items-center justify-center whitespace-nowrap">
               Apache 2.0
             </span>
             <span className="block text-[10px] sm:text-xs font-bold uppercase tracking-widest text-[#5F6368] mt-2 font-mono">
@@ -1685,7 +1685,7 @@ print(result["prompt"])`;
           </div>
 
           <div className="p-2 flex flex-col items-center justify-center">
-            <span className="block text-4xl sm:text-6xl font-display font-extrabold text-[#0A0A0A] tracking-tight min-h-[40px] sm:min-h-[60px] flex items-center justify-center">
+            <span className="block text-3xl sm:text-5xl lg:text-4xl xl:text-5xl font-display font-extrabold text-[#0A0A0A] tracking-tight min-h-[40px] sm:min-h-[60px] flex items-center justify-center">
               Python
             </span>
             <span className="block text-[10px] sm:text-xs font-bold uppercase tracking-widest text-[#5F6368] mt-2 font-mono">
@@ -1694,7 +1694,7 @@ print(result["prompt"])`;
           </div>
 
           <div className="p-2 flex flex-col items-center justify-center">
-            <span className="block text-4xl sm:text-6xl font-display font-extrabold text-[#0A0A0A] tracking-tight min-h-[40px] sm:min-h-[60px] flex items-center justify-center">
+            <span className="block text-3xl sm:text-5xl lg:text-4xl xl:text-5xl font-display font-extrabold text-[#0A0A0A] tracking-tight min-h-[40px] sm:min-h-[60px] flex items-center justify-center">
               Zero
             </span>
             <span className="block text-[10px] sm:text-xs font-bold uppercase tracking-widest text-[#5F6368] mt-2 font-mono">
