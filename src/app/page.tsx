@@ -1573,15 +1573,10 @@ print(result["prompt"])`;
         <motion.div
           animate={mounted && !prefersReduced ? { y: [0, -4, 0] } : undefined}
           transition={mounted && !prefersReduced ? { repeat: Infinity, duration: 4.5, ease: "easeInOut" } : undefined}
-          className="relative z-10 inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#F1F3F4] text-[10px] sm:text-xs font-bold uppercase tracking-widest text-[#5F6368] mb-6 sm:mb-8 shadow-sm group/eyebrow relative cursor-help"
+          className="relative z-10 inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#F1F3F4] text-[10px] sm:text-xs font-bold uppercase tracking-widest text-[#5F6368] mb-6 sm:mb-8 shadow-sm"
         >
           <span className="w-1.5 h-1.5 bg-[#34A853] rounded-full" />
-          <span>OPEN SOURCE • Apache 2.0 • ZERO DEPENDENCIES</span>
-          {/* Eyebrow Tooltip */}
-          <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover/eyebrow:block w-64 p-3 bg-[#0A0A0A] text-white text-[10px] sm:text-xs rounded shadow-lg z-50 text-center leading-relaxed font-sans normal-case">
-            Licensed under Apache 2.0 starting with version 0.4.0. Prior versions (0.1.0 through 0.3.0) remain permanently licensed under MIT.
-            <div className="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-[#0A0A0A]" />
-          </div>
+          OPEN SOURCE • Apache 2.0 • ZERO DEPENDENCIES
         </motion.div>
 
         {/* Headline - Solid black text only */}
@@ -1680,19 +1675,13 @@ print(result["prompt"])`;
             </span>
           </div>
 
-          <div className="p-2 flex flex-col items-center justify-center relative group/license cursor-help">
+          <div className="p-2 flex flex-col items-center justify-center">
             <span className="block text-3xl sm:text-5xl font-display font-extrabold text-[#0A0A0A] tracking-tight min-h-[40px] sm:min-h-[60px] flex items-center justify-center whitespace-nowrap">
               Apache 2.0
             </span>
-            <span className="block text-[10px] sm:text-xs font-bold uppercase tracking-widest text-[#5F6368] mt-2 font-mono flex items-center gap-1">
+            <span className="block text-[10px] sm:text-xs font-bold uppercase tracking-widest text-[#5F6368] mt-2 font-mono">
               License
-              <Info className="w-3 h-3 text-[#5F6368] opacity-70" />
             </span>
-            {/* Tooltip */}
-            <div className="absolute bottom-full mb-2 hidden group-hover/license:block w-64 p-3 bg-[#0A0A0A] text-white text-[10px] sm:text-xs rounded shadow-lg z-50 text-center leading-relaxed font-sans normal-case">
-              Licensed under Apache 2.0 starting with version 0.4.0. Prior versions (0.1.0 through 0.3.0) remain permanently licensed under MIT.
-              <div className="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-[#0A0A0A]" />
-            </div>
           </div>
 
           <div className="p-2 flex flex-col items-center justify-center">
@@ -2884,20 +2873,15 @@ print(result["prompt"])`;
             <h5 className="font-mono text-[10px] uppercase font-bold text-[#5F6368] mb-4 tracking-wider font-mono">Open Source</h5>
             <ul className="space-y-2 text-xs sm:text-sm text-[#5F6368]">
               <li><a href="https://github.com/athishio/context-gc" target="_blank" rel="noreferrer" className="hover:text-[#0A0A0A] transition-colors duration-200">GitHub Repository</a></li>
-              <li className="relative group/footer-license">
+              <li>
                 <a 
                   href="https://www.apache.org/licenses/LICENSE-2.0" 
                   target="_blank" 
                   rel="noreferrer" 
-                  className="hover:text-[#0A0A0A] transition-colors duration-200 cursor-help"
+                  className="hover:text-[#0A0A0A] transition-colors duration-200"
                 >
                   Apache 2.0 License
                 </a>
-                {/* Tooltip */}
-                <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover/footer-license:block w-64 p-3 bg-[#0A0A0A] text-white text-[10px] sm:text-xs rounded shadow-lg z-50 text-center leading-relaxed">
-                  Licensed under Apache 2.0 starting with version 0.4.0. Prior versions (0.1.0 through 0.3.0) remain permanently licensed under MIT.
-                  <div className="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-[#0A0A0A]" />
-                </div>
               </li>
               <li><a href="https://github.com/athishio/context-gc/blob/main/CHANGELOG.md" target="_blank" rel="noreferrer" className="hover:text-[#0A0A0A] transition-colors duration-200">CHANGELOG</a></li>
             </ul>
@@ -2913,14 +2897,7 @@ print(result["prompt"])`;
 
         <div className="flex flex-col sm:flex-row justify-between items-center gap-4 pt-6 text-[11px] sm:text-xs text-[#5F6368] font-mono">
           <span>© 2026 Context-GC. Built in the open.</span>
-          <span className="relative group/footer-bottom-license cursor-help">
-            github.com/athishio/context-gc · Apache 2.0 License
-            {/* Tooltip */}
-            <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover/footer-bottom-license:block w-64 p-3 bg-[#0A0A0A] text-white text-[10px] sm:text-xs rounded shadow-lg z-50 text-center leading-relaxed font-sans normal-case">
-              Licensed under Apache 2.0 starting with version 0.4.0. Prior versions (0.1.0 through 0.3.0) remain permanently licensed under MIT.
-              <div className="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-[#0A0A0A]" />
-            </div>
-          </span>
+          <span>github.com/athishio/context-gc · Apache 2.0 License</span>
         </div>
       </footer>
 
