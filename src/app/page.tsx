@@ -711,10 +711,10 @@ const DOCS_DATA = [
       <div>
         <h3 className="text-xl font-bold font-display text-[#0A0A0A] mb-3">Core Concept</h3>
         <p className="text-[#5F6368] leading-relaxed mb-4 font-sans">
-          Context-GC is a framework-agnostic, installable library combining deterministic graph-based pruning with recoverable receipts. While existing tools (such as Self-GC, ClawVM, Cognee, ContextNest, Headroom, and MemGPT/Letta) split these approaches across research papers, hosted SaaS products, client-side compressors, or LLM-based summarization routines, Context-GC ships as a simple, drop-in, zero-dependency Python library designed for developers building stateful agent workflows.
+          Trace-GC is a framework-agnostic, installable library combining deterministic graph-based pruning with recoverable receipts. While existing tools (such as Self-GC, ClawVM, Cognee, ContextNest, Headroom, and MemGPT/Letta) split these approaches across research papers, hosted SaaS products, client-side compressors, or LLM-based summarization routines, Trace-GC ships as a simple, drop-in, zero-dependency Python library designed for developers building stateful agent workflows.
         </p>
         <p className="text-[#5F6368] leading-relaxed mb-4 font-sans">
-          By modeling the agent's interaction history (execution traces) as a directed multigraph, Context-GC identifies and removes obsolete or superseded steps, dead execution branches, and cycles. When elements are pruned, Context-GC leaves behind lightweight, deterministic <em>receipt stubs</em> inline, allowing agents to preserve awareness of their history. Furthermore, the complete original content of any pruned step remains fully recoverable on-demand.
+          By modeling the agent's interaction history (execution traces) as a directed multigraph, Trace-GC identifies and removes obsolete or superseded steps, dead execution branches, and cycles. When elements are pruned, Trace-GC leaves behind lightweight, deterministic <em>receipt stubs</em> inline, allowing agents to preserve awareness of their history. Furthermore, the complete original content of any pruned step remains fully recoverable on-demand.
         </p>
       </div>
     )
@@ -726,14 +726,14 @@ const DOCS_DATA = [
       <div>
         <h3 className="text-xl font-bold font-display text-[#0A0A0A] mb-3">Pipeline Architecture</h3>
         <p className="text-[#5F6368] leading-relaxed mb-4 font-sans">
-          Context-GC processes execution traces through a linear compilation pipeline, transforming a raw timeline of structured events into a clean, compacted prompt prefix.
+          Trace-GC processes execution traces through a linear compilation pipeline, transforming a raw timeline of structured events into a clean, compacted prompt prefix.
         </p>
         <div className="bg-[#F1F3F4] p-4 rounded-lg border border-border-subtle font-mono text-xs text-brand-blue mb-4 overflow-x-auto whitespace-nowrap">
           Trace &rarr; Graph &rarr; Override Engine + Dead-Branch Sweeper &rarr; Topo Sampler &rarr; Compacted Prompt + Receipt Store
         </div>
         <h4 className="text-md font-bold text-[#0A0A0A] mb-2">Key Core Entries:</h4>
         <ul className="list-disc pl-5 text-[#5F6368] space-y-2 font-sans">
-          <li><strong>ContextGC Wrapper</strong>: Recommended for agent loops. Allows incremental event appends (<code className="text-brand-blue font-mono">add_event()</code>) and on-demand compaction (<code className="text-brand-blue font-mono">compact()</code>).</li>
+          <li><strong>TraceGC Wrapper</strong>: Recommended for agent loops. Allows incremental event appends (<code className="text-brand-blue font-mono">add_event()</code>) and on-demand compaction (<code className="text-brand-blue font-mono">compact()</code>).</li>
           <li><strong>compact_events()</strong>: Low-level single-shot function for static log lists.</li>
           <li><strong>Receipt Recovery Model</strong>: Non-destructive memory design storing stubs like <code className="text-brand-blue font-mono">[RECEIPT node_id]</code>.</li>
         </ul>
@@ -746,18 +746,18 @@ const DOCS_DATA = [
     content: (
       <div>
         <h3 className="text-xl font-bold font-display text-[#0A0A0A] mb-3">Get Started</h3>
-        <p className="text-[#5F6368] mb-4 font-sans">You can set up Context-GC either locally for development or from PyPI:</p>
+        <p className="text-[#5F6368] mb-4 font-sans">You can set up Trace-GC either locally for development or from PyPI:</p>
         
         <h4 className="text-[#0A0A0A] font-bold mb-2">From Source (Local Dev)</h4>
         <pre className="bg-[#F8F9FA] p-3 rounded-lg border border-border-subtle text-sm text-brand-blue font-mono mb-4">
-          git clone https://github.com/athishio/context-gc.git{"\n"}
-          cd context-gc{"\n"}
+          git clone https://github.com/athishio/trace-gc.git{"\n"}
+          cd trace-gc{"\n"}
           pip install -e .
         </pre>
 
         <h4 className="text-[#0A0A0A] font-bold mb-2">From PyPI</h4>
         <pre className="bg-[#F8F9FA] p-3 rounded-lg border border-border-subtle text-sm text-brand-blue font-mono">
-          pip install context-gc
+          pip install trace-gc
         </pre>
       </div>
     )
@@ -770,9 +770,9 @@ const DOCS_DATA = [
         <h3 className="text-xl font-bold font-display text-[#0A0A0A] mb-3">Incremental Client</h3>
         <p className="text-[#5F6368] mb-4 font-sans">The main wrapper for live agent execution loops:</p>
         <pre className="bg-[#F8F9FA] p-4 rounded-lg border border-border-subtle text-xs text-[#0A0A0A] font-mono mb-4 overflow-x-auto">
-{`from context_gc import ContextGC
+{`from trace_gc import TraceGC
 
-client = ContextGC()
+client = TraceGC()
 
 # Add event step-by-step
 client.add_event({
@@ -798,7 +798,7 @@ print(result["prompt"])`}
         <h3 className="text-xl font-bold font-display text-[#0A0A0A] mb-3">Batch Compaction</h3>
         <p className="text-[#5F6368] mb-4 font-sans">If you already have a full, pre-collected list of events upfront, you can use the lower-level single-shot function:</p>
         <pre className="bg-[#F8F9FA] p-4 rounded-lg border border-border-subtle text-xs text-[#0A0A0A] font-mono overflow-x-auto">
-{`from context_gc import compact_events
+{`from trace_gc import compact_events
 
 events = [
     {"id": "e001", "type": "decision", "timestamp": 1000, "parent_id": None, "content": "Hello"},
@@ -816,17 +816,17 @@ result = compact_events(events)`}
       <div>
         <h3 className="text-xl font-bold font-display text-[#0A0A0A] mb-3">Provider Integrations</h3>
         <p className="text-[#5F6368] mb-4 font-sans">
-          Context-GC provides concrete integration helper functions for popular LLM provider libraries. These helper functions are optional (lazy-loaded inside), keeping the core package completely dependency-free.
+          Trace-GC provides concrete integration helper functions for popular LLM provider libraries. These helper functions are optional (lazy-loaded inside), keeping the core package completely dependency-free.
         </p>
         <pre className="bg-[#F8F9FA] p-4 rounded-lg border border-border-subtle text-xs text-[#0A0A0A] font-mono mb-4 overflow-x-auto">
-{`from context_gc import ContextGC
-from context_gc.middleware import call_openai_with_compaction
+{`from trace_gc import TraceGC
+from trace_gc.middleware import call_openai_with_compaction
 
-client = ContextGC()
+client = TraceGC()
 # Add your events...
 
 res = call_openai_with_compaction(
-    context_gc=client,
+    trace_gc=client,
     model="gpt-4o-mini",
     user_message="Explain what value x holds."
 )`}
@@ -885,7 +885,7 @@ print(client.get_receipt("e002"))
     content: (
       <div>
         <h3 className="text-xl font-bold font-display text-[#0A0A0A] mb-3">Structured Schema Validation</h3>
-        <p className="text-[#5F6368] mb-4 font-sans">All events are validated using types defined in <code className="text-brand-blue font-mono">context_gc/events.py</code>:</p>
+        <p className="text-[#5F6368] mb-4 font-sans">All events are validated using types defined in <code className="text-brand-blue font-mono">trace_gc/events.py</code>:</p>
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs border-collapse">
             <thead>
@@ -934,13 +934,13 @@ print(client.get_receipt("e002"))
       <div>
         <h3 className="text-xl font-bold font-display text-[#0A0A0A] mb-3">Context Reduction Niche</h3>
         <p className="text-[#5F6368] mb-4 font-sans">
-          How does Context-GC compare directly with alternative paradigms like Headroom or AI Summarization?
+          How does Trace-GC compare directly with alternative paradigms like Headroom or AI Summarization?
         </p>
         <p className="text-[#5F6368] mb-4 font-sans">
           <strong>Headroom</strong> compresses the <em>content</em> of individual messages/tool-outputs as they arrive—routing JSON/code/logs/text to per-type compressors, and explicitly leaves prior conversation history untouched to preserve provider KV-cache hits.
         </p>
         <p className="text-[#5F6368] font-sans">
-          <strong>Context-GC</strong> solves a different layer: given an agent's already-accumulated structured event history, it identifies which parts are now dead (superseded, abandoned, or cyclical) and structurally removes them.
+          <strong>Trace-GC</strong> solves a different layer: given an agent's already-accumulated structured event history, it identifies which parts are now dead (superseded, abandoned, or cyclical) and structurally removes them.
         </p>
       </div>
     )
@@ -952,7 +952,7 @@ print(client.get_receipt("e002"))
       <div>
         <h3 className="text-xl font-bold font-display text-[#0A0A0A] mb-3">Verifiably Correct Compaction</h3>
         <p className="text-[#5F6368] mb-3 font-sans">
-          Across coding, research, and support traces, Context-GC maintains 100% correct probe recovery while reducing token bloat.
+          Across coding, research, and support traces, Trace-GC maintains 100% correct probe recovery while reducing token bloat.
         </p>
         <p className="text-[#5F6368] font-sans">
           Read the full tables under the Benchmarks section of the site, comparing single-shot summarizations, naive truncations, and our pipeline.
@@ -977,8 +977,8 @@ print(client.get_receipt("e002"))
 ];
 
 const REPL_STEPS = [
-  { text: ">>> from context_gc import ContextGC", delay: 800 },
-  { text: ">>> client = ContextGC()", delay: 600 },
+  { text: ">>> from trace_gc import TraceGC", delay: 800 },
+  { text: ">>> client = TraceGC()", delay: 600 },
   { text: ">>> client.add_event({ 'id': 'e1', 'type': 'set_var', 'key': 'x', 'value': 10 })", delay: 900 },
   { text: ">>> client.add_event({ 'id': 'e2', 'type': 'set_var', 'key': 'x', 'value': 20 })", delay: 800 },
   { text: ">>> result = client.compact()", delay: 700 },
@@ -991,19 +991,19 @@ const CASE_STUDIES = [
   {
     title: "Conversational Reasoning Loop",
     metric: "42% context reduction",
-    description: "During multi-step reasoning, agents accumulate deep tree loops and trial runs. Context-GC sweeps aborted paths and redundant thoughts automatically, preserving the final clean sequence.",
+    description: "During multi-step reasoning, agents accumulate deep tree loops and trial runs. Trace-GC sweeps aborted paths and redundant thoughts automatically, preserving the final clean sequence.",
     stats: ["Accumulated loops: 4,200 tokens", "Post-compaction: 2,436 tokens", "Correctness: 100% decision probe recall"]
   },
   {
     title: "Multi-File Code Assistant",
     metric: "3.2x KV-cache hits",
-    description: "Code generation loops generate repetitive logs, linter results, and duplicate compiler diagnostics. Context-GC collapses these identical steps, maximizing KV-cache reuse.",
+    description: "Code generation loops generate repetitive logs, linter results, and duplicate compiler diagnostics. Trace-GC collapses these identical steps, maximizing KV-cache reuse.",
     stats: ["Linter errors: collapsed", "Superseded outputs: receipted", "KV-cache hit rate: 84%"]
   },
   {
     title: "Structured Research Web-Scraper",
     metric: "0.00$ extra API latency",
-    description: "Scrapers scrape pages in parallel, hitting redirect loops and circular logs. Context-GC resolves cycles defensively via Tarjan's algorithm and strips abandoned paths locally.",
+    description: "Scrapers scrape pages in parallel, hitting redirect loops and circular logs. Trace-GC resolves cycles defensively via Tarjan's algorithm and strips abandoned paths locally.",
     stats: ["Cycles: collapsed via Tarjan", "Abandoned pages: swept", "Execution cost: fully local (0.0ms)"]
   }
 ];
@@ -1012,7 +1012,7 @@ const CASE_STUDIES = [
 const PIPELINE_STAGE_DETAILS = [
   {
     title: "1. Dead-Branch Sweeper",
-    description: "DFS sweep deletes unsuccessful sub-branches. When an abandon marker is added, Context-GC removes all preceding path components of that branch.",
+    description: "DFS sweep deletes unsuccessful sub-branches. When an abandon marker is added, Trace-GC removes all preceding path components of that branch.",
     before: `# raw events
 e001 [decision] "Try search"
 e002 [tool_call] "google_search"
@@ -1079,7 +1079,7 @@ export default function ContextGcWebsite() {
   };
 
   const handleCtaCopy = () => {
-    navigator.clipboard.writeText("pip install context-gc");
+    navigator.clipboard.writeText("pip install trace-gc");
     setCtaCopied(true);
     setTimeout(() => setCtaCopied(false), 1500);
   };
@@ -1113,11 +1113,11 @@ export default function ContextGcWebsite() {
     return () => mediaQuery.removeEventListener("change", listener);
   }, []);
 
-  // Fetch live star and fork counts from Athish M's context-gc repo, polling every 2 minutes for real-time updates with caching and rate limit safety
+  // Fetch live star and fork counts from Athish M's trace-gc repo, polling every 2 minutes for real-time updates with caching and rate limit safety
   useEffect(() => {
     if (typeof window === "undefined") return;
 
-    const CACHE_KEY = "context_gc_stats";
+    const CACHE_KEY = "trace_gc_stats";
     const POLLING_INTERVAL_MS = 120000; // 2 minutes
 
     // Read cache helper
@@ -1155,7 +1155,7 @@ export default function ContextGcWebsite() {
       }
 
       try {
-        const response = await fetch("https://api.github.com/repos/athishio/context-gc");
+        const response = await fetch("https://api.github.com/repos/athishio/trace-gc");
         
         // Handle rate limit checks via headers
         const remaining = response.headers.get("X-RateLimit-Remaining");
@@ -1233,7 +1233,7 @@ export default function ContextGcWebsite() {
   };
 
   const handleHeroCopy = () => {
-    navigator.clipboard.writeText("pip install context-gc");
+    navigator.clipboard.writeText("pip install trace-gc");
     setHeroCopied(true);
     setTimeout(() => setHeroCopied(false), 1500);
   };
@@ -1260,10 +1260,10 @@ export default function ContextGcWebsite() {
     setCarouselIndex((prev) => (prev === CASE_STUDIES.length - 1 ? 0 : prev + 1));
   };
 
-  const incrementalCode = `from context_gc import ContextGC
+  const incrementalCode = `from trace_gc import TraceGC
 
 # 1. Initialize the client
-client = ContextGC()
+client = TraceGC()
 
 # 2. Append events incrementally as they occur
 client.add_event({
@@ -1295,7 +1295,7 @@ result = client.compact()
 print(result["prompt"])
 # Output: [RECEIPT e002]\nx = 20\ndecision: Start config`;
 
-  const singleShotCode = `from context_gc import compact_events
+  const singleShotCode = `from trace_gc import compact_events
 
 # Low-level single-shot list compaction
 events = [
@@ -1335,14 +1335,14 @@ print(result["prompt"])`;
             {/* Branded Logo Image */}
             <Image 
               src="/logo.png" 
-              alt="Context-GC Logo" 
+              alt="Trace-GC Logo" 
               width={376} 
               height={418} 
               className="h-7 w-auto sm:h-9 object-contain" 
               priority
             />
             <span className="font-display font-extrabold text-lg sm:text-xl tracking-tight text-text-primary hover:text-brand-blue transition-colors duration-300 flex items-center gap-1">
-              Context-GC
+              Trace-GC
             </span>
           </div>
 
@@ -1462,7 +1462,7 @@ print(result["prompt"])`;
 
             <a 
               onMouseEnter={() => setHoveredNavIndex(5)}
-              href="https://github.com/athishio/context-gc" 
+              href="https://github.com/athishio/trace-gc" 
               target="_blank" 
               rel="noreferrer" 
               className="relative px-3 py-1.5 rounded-full flex items-center gap-1.5 hover:text-text-primary transition-colors duration-200 font-sans text-xs font-semibold"
@@ -1507,7 +1507,7 @@ print(result["prompt"])`;
             <button onClick={() => scrollToSection("benchmarks")} className="text-left py-2 hover:text-text-primary border-b border-border-subtle">Benchmarks</button>
             <button onClick={() => scrollToSection("code-sandbox")} className="text-left py-2 hover:text-text-primary border-b border-border-subtle">Examples</button>
             <button onClick={() => scrollToSection("maintainers")} className="text-left py-2 hover:text-text-primary border-b border-border-subtle">Maintainers</button>
-            <a href="https://github.com/athishio/context-gc" target="_blank" rel="noreferrer" className="flex items-center gap-2 py-2 hover:text-text-primary border-b border-border-subtle">
+            <a href="https://github.com/athishio/trace-gc" target="_blank" rel="noreferrer" className="flex items-center gap-2 py-2 hover:text-text-primary border-b border-border-subtle">
               <Github className="w-4 h-4" />
               GitHub
             </a>
@@ -1586,7 +1586,7 @@ print(result["prompt"])`;
 
         {/* Description */}
         <p className="relative z-10 max-w-2xl text-[#5F6368] text-sm sm:text-base leading-relaxed mb-8 sm:mb-10 px-2 animate-reveal [animation-delay:150ms] font-sans">
-          Context-GC prunes obsolete updates, aborted pipelines, and duplicate
+          Trace-GC prunes obsolete updates, aborted pipelines, and duplicate
           tool logs from your agent's execution history — deterministically,
           locally, with zero extra LLM calls. Original steps remain recoverable.
         </p>
@@ -1603,7 +1603,7 @@ print(result["prompt"])`;
           >
             <div className="flex items-center gap-2.5">
               <span className="text-text-muted font-bold select-none">$</span>
-              <span className="text-text-primary font-medium">pip install context-gc</span>
+              <span className="text-text-primary font-medium">pip install trace-gc</span>
             </div>
             
             <button className="flex items-center gap-1.5 text-[10px] uppercase font-bold tracking-wider text-brand-blue hover:text-text-primary transition-colors duration-200">
@@ -1629,7 +1629,7 @@ print(result["prompt"])`;
             <ArrowRight className="w-4 h-4" />
           </MagneticButton>
           <MagneticButton
-            onClick={() => window.open("https://github.com/athishio/context-gc", "_blank")}
+            onClick={() => window.open("https://github.com/athishio/trace-gc", "_blank")}
             className="w-full sm:w-auto px-8 py-3.5 bg-[#F1F3F4] text-text-primary font-bold text-xs uppercase tracking-wider rounded-full flex items-center justify-center gap-2 cursor-pointer transition-colors duration-250 hover:bg-slate-200/70"
           >
             <Github className="w-4.5 h-4.5" />
@@ -1761,7 +1761,7 @@ print(result["prompt"])`;
               One Compaction Pass<br />Nothing Lost
             </h2>
             <p className="text-[#5F6368] text-sm sm:text-base font-sans">
-              Context-GC executes 4 deterministic stages locally, transforming execution graphs into clean, compacted prompt output.
+              Trace-GC executes 4 deterministic stages locally, transforming execution graphs into clean, compacted prompt output.
             </p>
           </div>
         </ScrollReveal>
@@ -1845,7 +1845,7 @@ print(result["prompt"])`;
               Engineered for Precision
             </h2>
             <p className="text-[#5F6368] text-sm sm:text-base">
-              Context-GC bypasses lossy summaries. Every pruned byte remains retrievable.
+              Trace-GC bypasses lossy summaries. Every pruned byte remains retrievable.
             </p>
           </div>
         </ScrollReveal>
@@ -1912,11 +1912,11 @@ print(result["prompt"])`;
                   Incremental or Single-Shot
                 </h3>
                 <p className="text-text-muted text-sm leading-relaxed font-sans">
-                  Initialize the <code className="text-brand-blue text-xs font-mono">ContextGC</code> client wrapper to append logs step-by-step during live agent execution loops, or compile list payloads in batch calls.
+                  Initialize the <code className="text-brand-blue text-xs font-mono">TraceGC</code> client wrapper to append logs step-by-step during live agent execution loops, or compile list payloads in batch calls.
                 </p>
               </div>
               <div className="mt-6 flex gap-2">
-                <span className="text-[10px] bg-slate-100 border border-border-subtle text-text-muted font-mono px-2 py-1 rounded font-mono">ContextGC()</span>
+                <span className="text-[10px] bg-slate-100 border border-border-subtle text-text-muted font-mono px-2 py-1 rounded font-mono">TraceGC()</span>
                 <span className="text-[10px] bg-slate-100 border border-border-subtle text-text-muted font-mono px-2 py-1 rounded font-mono">compact_events()</span>
               </div>
             </Card>
@@ -2177,7 +2177,7 @@ print(result["prompt"])`;
               Real Data, No Hype
             </h2>
             <p className="text-[#5F6368] text-sm sm:text-base leading-relaxed">
-              Context-GC does not compete with hosted vector DBs or lose content. Below are literal benchmark statistics across different trace sizes.
+              Trace-GC does not compete with hosted vector DBs or lose content. Below are literal benchmark statistics across different trace sizes.
             </p>
           </div>
         </ScrollReveal>
@@ -2223,7 +2223,7 @@ print(result["prompt"])`;
                   </tr>
                   <tr className="bg-brand-blue/5 hover:bg-brand-blue/10 transition-colors">
                     <td className="p-4 font-bold text-brand-blue font-display">Short</td>
-                    <td className="p-4 font-mono text-brand-blue font-bold text-xs">context_gc_pipeline</td>
+                    <td className="p-4 font-mono text-brand-blue font-bold text-xs">trace_gc_pipeline</td>
                     <td className="p-4 font-mono text-brand-blue font-bold text-xs">75.3</td>
                     <td className="p-4 text-brand-blue font-bold">100%</td>
                     <td className="p-4 text-brand-blue font-bold">100%</td>
@@ -2245,7 +2245,7 @@ print(result["prompt"])`;
                   </tr>
                   <tr className="bg-brand-blue/5 hover:bg-brand-blue/10 transition-colors">
                     <td className="p-4 font-bold text-brand-blue font-display">Medium</td>
-                    <td className="p-4 font-mono text-brand-blue font-bold text-xs">context_gc_pipeline</td>
+                    <td className="p-4 font-mono text-brand-blue font-bold text-xs">trace_gc_pipeline</td>
                     <td className="p-4 font-mono text-brand-blue font-bold text-xs">299.0</td>
                     <td className="p-4 text-brand-blue font-bold">100%</td>
                     <td className="p-4 text-brand-blue font-bold">100%</td>
@@ -2267,7 +2267,7 @@ print(result["prompt"])`;
                   </tr>
                   <tr className="bg-brand-blue/5 hover:bg-brand-blue/10 transition-colors">
                     <td className="p-4 font-bold text-brand-blue font-display">Long</td>
-                    <td className="p-4 font-mono text-brand-blue font-bold text-xs">context_gc_pipeline</td>
+                    <td className="p-4 font-mono text-brand-blue font-bold text-xs">trace_gc_pipeline</td>
                     <td className="p-4 font-mono text-brand-blue font-bold text-xs">1028.3</td>
                     <td className="p-4 text-brand-blue font-bold">100%</td>
                     <td className="p-4 text-brand-blue font-bold">100%</td>
@@ -2285,7 +2285,7 @@ print(result["prompt"])`;
         <ScrollReveal>
           <div className="bg-white border border-border-subtle rounded-lg p-6 mb-6 shadow-sm">
             <blockquote className="text-[#5F6368] text-xs sm:text-sm leading-relaxed italic">
-              "Context-GC's token reduction is more conservative than truncation or AI summarization. The tradeoff is deliberate — nothing is ever discarded, and every pruned event is recoverable via <code className="text-xs text-brand-blue font-mono bg-slate-50 border border-border-subtle px-1.5 py-0.5 rounded font-mono">get_receipt()</code>. It is the only method in this benchmark that scored 100% on all four correctness probes at every trace length."
+              "Trace-GC's token reduction is more conservative than truncation or AI summarization. The tradeoff is deliberate — nothing is ever discarded, and every pruned event is recoverable via <code className="text-xs text-brand-blue font-mono bg-slate-50 border border-border-subtle px-1.5 py-0.5 rounded font-mono">get_receipt()</code>. It is the only method in this benchmark that scored 100% on all four correctness probes at every trace length."
             </blockquote>
           </div>
         </ScrollReveal>
@@ -2307,7 +2307,7 @@ print(result["prompt"])`;
             {caveatOpen && (
               <div className="p-6 bg-[#FAFAFA] border-t border-border-subtle text-xs sm:text-sm text-[#5F6368] space-y-4 leading-relaxed select-text font-sans">
                 <p>
-                  <strong>1. Exact Substring matching bias</strong>: The decision probe checks for exact substring survival against the original event text. This structurally favors methods that preserve verbatim text (<code className="text-brand-blue font-mono text-xs">context_gc_pipeline</code>, truncation) over methods that paraphrase (<code className="text-brand-blue font-mono text-xs">ai_summarize_single/recursive</code>) — a correctly-summarized, semantically accurate paraphrase can score 0% on this probe even when it retains the right information in different words. We report probe scores as-is because they're deterministic and reproducible, but this benchmark measures literal information survival, not downstream answer correctness.
+                  <strong>1. Exact Substring matching bias</strong>: The decision probe checks for exact substring survival against the original event text. This structurally favors methods that preserve verbatim text (<code className="text-brand-blue font-mono text-xs">trace_gc_pipeline</code>, truncation) over methods that paraphrase (<code className="text-brand-blue font-mono text-xs">ai_summarize_single/recursive</code>) — a correctly-summarized, semantically accurate paraphrase can score 0% on this probe even when it retains the right information in different words. We report probe scores as-is because they're deterministic and reproducible, but this benchmark measures literal information survival, not downstream answer correctness.
                 </p>
                 <p>
                   <strong>2. Model limitations</strong>: Gemini Pro was unavailable due to quota restrictions. All AI-summarization figures were tested on the Flash-tier only.
@@ -2402,7 +2402,7 @@ print(result["prompt"])`;
           <div className="text-center max-w-3xl mx-auto mb-16">
             <span className="text-xs font-mono font-bold uppercase tracking-wider text-brand-blue">Comparison Matrix</span>
             <h2 className="text-4xl sm:text-5xl font-display font-extrabold text-[#0A0A0A] tracking-tight mt-2 mb-4">
-              How Context-GC Compares
+              How Trace-GC Compares
             </h2>
             <p className="text-[#5F6368] text-sm sm:text-base">
               Detailed, honest comparisons with alternate agentic memory architectures.
@@ -2420,7 +2420,7 @@ print(result["prompt"])`;
                     <th className="p-4">Project Paradigm</th>
                     <th className="p-4">Focus</th>
                     <th className="p-4">Strength</th>
-                    <th className="p-4">Limitation vs. Context-GC</th>
+                    <th className="p-4">Limitation vs. Trace-GC</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-border-subtle text-text-muted">
@@ -2496,11 +2496,11 @@ print(result["prompt"])`;
               {/* Scripted code typewriter timeline output in light mode */}
               <div className="p-6 bg-[#F8F9FA] font-mono text-xs sm:text-sm text-[#0A0A0A] min-h-[320px] select-text">
                 <div className="mb-4">
-                  <span className="text-text-muted font-mono">$</span> <span className="text-[#0A0A0A] font-bold">pip install context-gc</span>
+                  <span className="text-text-muted font-mono">$</span> <span className="text-[#0A0A0A] font-bold">pip install trace-gc</span>
                   <p className="text-[#5F6368] text-xs mt-1 leading-relaxed">
-                    Downloading context_gc-0.3.0-py3-none-any.whl (24 kB){"\n"}
-                    Installing collected packages: context-gc{"\n"}
-                    Successfully installed context-gc-0.3.0
+                    Downloading trace_gc-0.3.0-py3-none-any.whl (24 kB){"\n"}
+                    Installing collected packages: trace-gc{"\n"}
+                    Successfully installed trace-gc-0.3.0
                   </p>
                 </div>
 
@@ -2590,19 +2590,19 @@ print(result["prompt"])`;
           <div className="space-y-4">
             {[
               {
-                q: "What is Context-GC?",
-                a: "Context-GC is a framework-agnostic Python library that compacts an AI agent's execution traces (tool outputs, state variables, and decision pathways) so they fit inside small LLM prompt boundaries. It runs 100% locally and deterministically, with zero external dependencies."
+                q: "What is Trace-GC?",
+                a: "Trace-GC is a framework-agnostic Python library that compacts an AI agent's execution traces (tool outputs, state variables, and decision pathways) so they fit inside small LLM prompt boundaries. It runs 100% locally and deterministically, with zero external dependencies."
               },
               {
                 q: "How is this different from AI summarization?",
-                a: "AI summarization uses stochastic language models to write conversational summaries. Summaries are slow, non-deterministic, cost api fees, and score 0% on decision probes. Context-GC uses precise graph algorithms to delete superseded values and abandoned branches while leaving recoverable receipt placeholders."
+                a: "AI summarization uses stochastic language models to write conversational summaries. Summaries are slow, non-deterministic, cost api fees, and score 0% on decision probes. Trace-GC uses precise graph algorithms to delete superseded values and abandoned branches while leaving recoverable receipt placeholders."
               },
               {
                 q: "What does 'receipt-preserving' mean?",
-                a: "When Context-GC prunes an event from prompt context, it converts the event into an inline receipt stub: `[RECEIPT node_id]`. The caller can retrieve the original parameters (such as execution parameters or logs) using the `get_receipt(graph, node_id)` function at any time."
+                a: "When Trace-GC prunes an event from prompt context, it converts the event into an inline receipt stub: `[RECEIPT node_id]`. The caller can retrieve the original parameters (such as execution parameters or logs) using the `get_receipt(graph, node_id)` function at any time."
               },
               {
-                q: "Does Context-GC call an LLM to compact context?",
+                q: "Does Trace-GC call an LLM to compact context?",
                 a: "No. The entire compaction pipeline executes locally inside the Python script. No models are queried, eliminating api latencies, usage pricing, and data residency risks."
               },
               {
@@ -2614,7 +2614,7 @@ print(result["prompt"])`;
                 a: "No. Compacting runs the complete pipeline stages from scratch across all graph events. It represents a linear runtime compiler that compiles final prompts on-demand rather than maintaining an incremental buffer."
               },
               {
-                q: "What are Context-GC's limitations?",
+                q: "What are Trace-GC's limitations?",
                 a: "It handles structured event traces only (no natural language parsing), assumes traces resolve into a DAG post cycle-collapsing, and doesn't deduplicate file/test updates because historical logs are needed for testing records."
               }
             ].map((faq, idx) => (
@@ -2647,7 +2647,7 @@ print(result["prompt"])`;
               Built in the Open
             </h2>
             <p className="text-[#5F6368] text-xs sm:text-sm mt-2 font-sans max-w-md mx-auto">
-              Context-GC is maintained on GitHub by the developers below.
+              Trace-GC is maintained on GitHub by the developers below.
             </p>
           </div>
           
@@ -2763,7 +2763,7 @@ print(result["prompt"])`;
             <DottedConstellationCard className="flex flex-col justify-between items-center text-center">
               <div>
                 <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-brand-blue block mb-2">Available at no charge</span>
-                <h3 className="text-2xl font-bold font-display text-[#0A0A0A] mb-4">Integrate Context-GC</h3>
+                <h3 className="text-2xl font-bold font-display text-[#0A0A0A] mb-4">Integrate Trace-GC</h3>
                 <p className="text-[#5F6368] text-xs sm:text-sm leading-relaxed mb-6">
                   Compact event timelines deterministically. Save LLM window space and costs.
                 </p>
@@ -2774,7 +2774,7 @@ print(result["prompt"])`;
                   onClick={handleCtaCopy}
                   className="w-full bg-slate-50 hover:bg-slate-100/70 border border-border-subtle p-3 rounded-full font-mono text-[11px] text-[#0A0A0A] flex justify-between items-center px-4 cursor-pointer transition-all duration-200 select-none"
                 >
-                  <span>pip install context-gc</span>
+                  <span>pip install trace-gc</span>
                   {ctaCopied ? (
                     <span className="text-[10px] text-brand-blue font-bold uppercase flex items-center gap-1">
                       <Check className="w-3.5 h-3.5 text-brand-blue" />
@@ -2810,7 +2810,7 @@ print(result["prompt"])`;
 
               <div className="w-full flex flex-col gap-3 items-center">
                 <motion.a
-                  href="https://github.com/athishio/context-gc"
+                  href="https://github.com/athishio/trace-gc"
                   target="_blank"
                   rel="noreferrer"
                   whileHover={{ scale: 1.03 }}
@@ -2846,12 +2846,12 @@ print(result["prompt"])`;
             <div className="flex items-center gap-2.5">
               <Image 
                 src="/logo.png" 
-                alt="Context-GC Logo" 
+                alt="Trace-GC Logo" 
                 width={376} 
                 height={418} 
                 className="h-8 w-auto object-contain" 
               />
-              <span className="font-display font-extrabold text-lg tracking-tight text-[#0A0A0A]">Context-GC</span>
+              <span className="font-display font-extrabold text-lg tracking-tight text-[#0A0A0A]">Trace-GC</span>
             </div>
             <p className="text-[#5F6368] text-xs sm:text-sm leading-relaxed max-w-sm">
               Deterministic, receipt-preserving context compaction middleware for AI agents. Keep history compact without risking information loss.
@@ -2872,7 +2872,7 @@ print(result["prompt"])`;
           <div>
             <h5 className="font-mono text-[10px] uppercase font-bold text-[#5F6368] mb-4 tracking-wider font-mono">Open Source</h5>
             <ul className="space-y-2 text-xs sm:text-sm text-[#5F6368]">
-              <li><a href="https://github.com/athishio/context-gc" target="_blank" rel="noreferrer" className="hover:text-[#0A0A0A] transition-colors duration-200">GitHub Repository</a></li>
+              <li><a href="https://github.com/athishio/trace-gc" target="_blank" rel="noreferrer" className="hover:text-[#0A0A0A] transition-colors duration-200">GitHub Repository</a></li>
               <li>
                 <a 
                   href="https://www.apache.org/licenses/LICENSE-2.0" 
@@ -2883,7 +2883,7 @@ print(result["prompt"])`;
                   Apache 2.0 License
                 </a>
               </li>
-              <li><a href="https://github.com/athishio/context-gc/blob/main/CHANGELOG.md" target="_blank" rel="noreferrer" className="hover:text-[#0A0A0A] transition-colors duration-200">CHANGELOG</a></li>
+              <li><a href="https://github.com/athishio/trace-gc/blob/main/CHANGELOG.md" target="_blank" rel="noreferrer" className="hover:text-[#0A0A0A] transition-colors duration-200">CHANGELOG</a></li>
             </ul>
           </div>
         </div>
@@ -2891,13 +2891,13 @@ print(result["prompt"])`;
         {/* Massive 200px+ black footer wordmark graphic */}
         <div className="w-full text-center border-t border-border-subtle pt-12 pb-6 overflow-hidden select-none pointer-events-none">
           <span className="block text-[14vw] sm:text-[9vw] font-display font-extrabold text-[#0A0A0A] tracking-tighter leading-none opacity-[0.04]">
-            CONTEXT-GC
+            TRACE-GC
           </span>
         </div>
 
         <div className="flex flex-col sm:flex-row justify-between items-center gap-4 pt-6 text-[11px] sm:text-xs text-[#5F6368] font-mono">
-          <span>© 2026 Context-GC. Built in the open.</span>
-          <span>github.com/athishio/context-gc · Apache 2.0 License</span>
+          <span>© 2026 Trace-GC. Built in the open.</span>
+          <span>github.com/athishio/trace-gc · Apache 2.0 License</span>
         </div>
       </footer>
 
