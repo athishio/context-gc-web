@@ -15,9 +15,9 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Trace-GC",
-  description: "Trace-GC is a zero-dependency Python library that deterministically prunes and compacts AI agent execution traces, with every pruned event recoverable via receipts.",
-  keywords: ["Trace-GC", "AI Agents", "Context Compaction", "LLM History Compression", "Deterministic GC", "Graph Pruning", "Python Library"],
+  title: "TraceGC",
+  description: "TraceGC is a zero-dependency Python library that deterministically prunes and compacts AI agent execution traces, with every pruned event recoverable via receipts.",
+  keywords: ["TraceGC", "AI Agents", "Context Compaction", "LLM History Compression", "Deterministic GC", "Graph Pruning", "Python Library"],
   authors: [{ name: "Athish M" }],
   icons: {
     icon: "/favicon.ico",
@@ -25,8 +25,8 @@ export const metadata: Metadata = {
     apple: "/logo.png",
   },
   openGraph: {
-    title: "Trace-GC",
-    description: "Trace-GC is a zero-dependency Python library that deterministically prunes and compacts AI agent execution traces, with every pruned event recoverable via receipts.",
+    title: "TraceGC",
+    description: "TraceGC is a zero-dependency Python library that deterministically prunes and compacts AI agent execution traces, with every pruned event recoverable via receipts.",
     type: "website",
   },
 };
