@@ -2082,7 +2082,7 @@ print(result["prompt"])`;
                   Typed Event Schema
                 </h3>
                 <p className="text-text-muted text-sm leading-relaxed font-sans">
-                  Robust validation for five basic structured event schemas: <code className="text-xs text-brand-blue font-mono">set_var</code>, <code className="text-xs text-brand-blue font-mono">tool_call</code>, <code className="text-xs text-brand-blue font-mono">tool_result</code>, <code className="text-xs text-brand-blue font-mono">abandon</code>, and <code className="text-xs text-brand-blue font-mono">decision</code>.
+                  Robust validation for 18 structured event schemas, from state updates to file edits, test runs, and git operations.
                 </p>
               </div>
               <div className="mt-6">
