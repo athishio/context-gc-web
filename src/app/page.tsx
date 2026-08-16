@@ -729,7 +729,7 @@ const DOCS_DATA = [
           TraceGC processes execution traces through a linear compilation pipeline, transforming a raw timeline of structured events into a clean, compacted prompt prefix.
         </p>
         <div className="bg-[#F1F3F4] p-4 rounded-lg border border-border-subtle font-mono text-xs text-brand-blue mb-4 overflow-x-auto whitespace-nowrap">
-          Trace &rarr; Graph &rarr; Override Engine + Dead-Branch Sweeper &rarr; Topo Sampler &rarr; Compacted Prompt + Receipt Store
+          Trace &rarr; Graph &rarr; Override Engine + Dead-Branch Sweeper &rarr; Topo Sampler &rarr; Semantic Pruning Engine &rarr; Compacted Prompt + Receipt Store
         </div>
         <h4 className="text-md font-bold text-[#0A0A0A] mb-2">Key Core Entries:</h4>
         <ul className="list-disc pl-5 text-[#5F6368] space-y-2 font-sans">
@@ -927,6 +927,10 @@ server.add_event({
           <li>
             <strong className="text-[#0A0A0A] block">4. Topological Sampler (Cycle Collapse)</strong>
             Collapses cycles and SCCs via Tarjan's algorithm to enforce a clean DAG.
+          </li>
+          <li>
+            <strong className="text-[#0A0A0A] block">5. Semantic Pruning Engine</strong>
+            Resolves semantic duplicates, superseded technology decisions, resolved error paths, obsolete file reads (once a file is edited), and redundant successful verification command executions.
           </li>
         </ul>
       </div>
@@ -1185,6 +1189,20 @@ e001 [decision] A -> parent B
 e002 [decision] B -> parent A`,
     after: `# pruned output
 [RECEIPT e001, e002] # Loop collapsed`
+  },
+  {
+    title: "5. Semantic Pruning Engine",
+    description: "Resolves semantic equivalents, superseded technology decisions, resolved error paths, obsolete file reads (once a file is edited), and redundant successful verification command executions.",
+    before: `# raw events
+e001 [file_read] path="main.py"
+e002 [file_edit] path="main.py", diff_hash="a1b2"
+e003 [verification] content="lint", passed=True
+e004 [verification] content="lint", passed=True`,
+    after: `# pruned output
+[RECEIPT e001] # Obsolete read
+e002 [file_edit] path="main.py", diff_hash="a1b2"
+e003 [verification] content="lint", passed=True
+[RECEIPT e004] # Redundant verification`
   }
 ];
 
@@ -1899,7 +1917,7 @@ print(result["prompt"])`;
               One Compaction Pass<br />Nothing Lost
             </h2>
             <p className="text-[#5F6368] text-sm sm:text-base font-sans">
-              TraceGC executes 4 deterministic stages locally, transforming execution graphs into clean, compacted prompt output.
+              TraceGC executes 5 deterministic stages locally, transforming execution graphs into clean, compacted prompt output.
             </p>
           </div>
         </ScrollReveal>
@@ -2185,7 +2203,7 @@ print(result["prompt"])`;
               <div className="relative">
                 {/* SVG responsive layout container */}
                 <div className="w-full overflow-x-auto pb-4">
-                  <svg className="w-full min-w-[700px] h-32 text-slate-400" viewBox="0 0 900 120">
+                  <svg className="w-full min-w-[700px] h-32 text-slate-400" viewBox="0 0 1100 120">
                     {/* Connection lines with flow dash animations */}
                     <g stroke="currentColor" strokeWidth="2">
                       <path 
@@ -2206,7 +2224,13 @@ print(result["prompt"])`;
                           hoveredStage === "topo" ? "text-brand-blue stroke-[2.5px]" : "text-slate-350"
                         }`} 
                       />
-                      <path d="M 780,60 L 830,60" strokeDasharray="4" />
+                      <path 
+                        d="M 780,60 L 850,60" 
+                        className={`transition-all duration-300 ${
+                          hoveredStage === "semantic" ? "text-brand-blue stroke-[2.5px]" : "text-slate-350"
+                        }`} 
+                      />
+                      <path d="M 970,60 L 1040,60" strokeDasharray="4" />
                     </g>
 
                     {/* Nodes */}
@@ -2252,14 +2276,25 @@ print(result["prompt"])`;
                       <text x="720" y="65" fill={hoveredStage === "topo" ? "#4285F4" : "#0A0A0A"} fontSize="11" fontWeight="bold" fontFamily="monospace" textAnchor="middle">Topo Sampler</text>
                     </g>
 
+                    {/* Semantic Pruning */}
+                    <g 
+                      className="cursor-pointer"
+                      onMouseEnter={() => setHoveredStage("semantic")}
+                      onMouseLeave={() => setHoveredStage(null)}
+                    >
+                      <rect x="850" y="30" width="120" height="60" rx="8" fill="#FFFFFF" stroke={hoveredStage === "semantic" ? "#4285F4" : "rgba(0,0,0,0.08)"} strokeWidth="2" className="transition-all duration-300" />
+                      <text x="910" y="58" fill={hoveredStage === "semantic" ? "#4285F4" : "#0A0A0A"} fontSize="10" fontWeight="bold" fontFamily="monospace" textAnchor="middle">Semantic Prune</text>
+                      <text x="910" y="74" fill={hoveredStage === "semantic" ? "#4285F4" : "#5F6368"} fontSize="9" fontFamily="monospace" textAnchor="middle">+ Cache Engine</text>
+                    </g>
+
                     {/* Outputs */}
                     <g 
                       className="cursor-pointer"
                       onMouseEnter={() => setHoveredStage("output")}
                       onMouseLeave={() => setHoveredStage(null)}
                     >
-                      <rect x="830" y="30" width="60" height="60" rx="8" fill="#FFFFFF" stroke={hoveredStage === "output" ? "#4285F4" : "rgba(0,0,0,0.08)"} strokeWidth="2" className="transition-all duration-300" />
-                      <text x="860" y="65" fill="#4285F4" fontSize="12" fontWeight="bold" fontFamily="monospace" textAnchor="middle">DAG</text>
+                      <rect x="1040" y="30" width="50" height="60" rx="8" fill="#FFFFFF" stroke={hoveredStage === "output" ? "#4285F4" : "rgba(0,0,0,0.08)"} strokeWidth="2" className="transition-all duration-300" />
+                      <text x="1065" y="65" fill="#4285F4" fontSize="12" fontWeight="bold" fontFamily="monospace" textAnchor="middle">DAG</text>
                     </g>
                   </svg>
                 </div>
@@ -2291,6 +2326,12 @@ print(result["prompt"])`;
                     <div className="text-left w-full">
                       <h5 className="text-brand-blue font-bold font-mono text-sm mb-1">[Stage 04: Topological cycle sampler]</h5>
                       <p className="text-text-muted text-xs sm:text-sm font-sans">Defensively collapses cycles and strongly connected components (SCCs) via Tarjan's algorithm to enforce correct DAG sequencing.</p>
+                    </div>
+                  )}
+                  {hoveredStage === "semantic" && (
+                    <div className="text-left w-full">
+                      <h5 className="text-brand-blue font-bold font-mono text-sm mb-1">[Stage 05: Semantic Pruning Engine]</h5>
+                      <p className="text-text-muted text-xs sm:text-sm font-sans">Resolves semantic duplicates, superseded technology decisions, resolved error paths, obsolete file reads (once a file is edited), and redundant successful verification command executions.</p>
                     </div>
                   )}
                   {hoveredStage === "output" && (
@@ -2400,7 +2441,7 @@ print(result["prompt"])`;
                     <td className="p-4 text-text-primary font-bold">100%</td>
                     <td className="p-4 text-red-500 font-bold">0.0%</td>
                     <td className="p-4 text-text-primary font-bold">100%</td>
-                    <td className="p-4 text-text-primary font-bold">100%</td>
+                    <td className="p-4 text-red-500 font-bold">0.0%</td>
                     <td className="p-4 text-red-500 font-mono text-xs font-bold">No</td>
                   </tr>
                   <tr className="bg-brand-blue/5 hover:bg-brand-blue/10 transition-colors">
