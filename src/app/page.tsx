@@ -1469,14 +1469,16 @@ print(result["prompt"])`;
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 sm:h-20 flex items-center justify-between">
           <div className="flex items-center gap-2 cursor-pointer" onClick={() => scrollToSection("hero")}>
             {/* Branded Logo Image */}
-            <Image 
-              src="/logo.png" 
-              alt="TraceGC Logo" 
-              width={376} 
-              height={418} 
-              className="h-7 w-auto sm:h-9 object-contain" 
-              priority
-            />
+            <div className="flex items-center justify-center bg-[#0A0A0A] rounded-[24%] h-7 w-7 sm:h-9 sm:w-9 select-none">
+              <Image 
+                src="/logo_icon_trimmed_transparent.png" 
+                alt="TraceGC Logo" 
+                width={620} 
+                height={643} 
+                style={{ width: '64%', height: '64%', objectFit: 'contain' }}
+                priority
+              />
+            </div>
             <span className="font-display font-extrabold text-lg sm:text-xl tracking-tight text-text-primary hover:text-brand-blue transition-colors duration-300 flex items-center gap-1">
               TraceGC
             </span>
@@ -2980,13 +2982,15 @@ print(result["prompt"])`;
           {/* Logo & Info */}
           <div className="md:col-span-2 flex flex-col gap-4">
             <div className="flex items-center gap-2.5">
-              <Image 
-                src="/logo.png" 
-                alt="TraceGC Logo" 
-                width={376} 
-                height={418} 
-                className="h-8 w-auto object-contain" 
-              />
+              <div className="flex items-center justify-center bg-[#0A0A0A] rounded-[24%] h-8 w-8 select-none">
+                <Image 
+                  src="/logo_icon_trimmed_transparent.png" 
+                  alt="TraceGC Logo" 
+                  width={620} 
+                  height={643} 
+                  style={{ width: '64%', height: '64%', objectFit: 'contain' }}
+                />
+              </div>
               <span className="font-display font-extrabold text-lg tracking-tight text-[#0A0A0A]">TraceGC</span>
             </div>
             <p className="text-[#5F6368] text-xs sm:text-sm leading-relaxed max-w-sm">

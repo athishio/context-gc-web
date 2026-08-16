@@ -15,6 +15,7 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://tracegc.vercel.app"),
   title: "TraceGC",
   description: "TraceGC is a zero-dependency Python library that deterministically prunes and compacts AI agent execution traces, with every pruned event recoverable via receipts.",
   keywords: ["TraceGC", "AI Agents", "Context Compaction", "LLM History Compression", "Deterministic GC", "Graph Pruning", "Python Library"],
@@ -22,12 +23,26 @@ export const metadata: Metadata = {
   icons: {
     icon: "/favicon.ico",
     shortcut: "/favicon.ico",
-    apple: "/logo.png",
+    apple: "/logo_badge_flattened.png",
   },
   openGraph: {
     title: "TraceGC",
     description: "TraceGC is a zero-dependency Python library that deterministically prunes and compacts AI agent execution traces, with every pruned event recoverable via receipts.",
     type: "website",
+    images: [
+      {
+        url: "/logo_badge_flattened.png",
+        width: 850,
+        height: 873,
+        alt: "TraceGC - Context Compaction for AI Agents",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "TraceGC",
+    description: "TraceGC is a zero-dependency Python library that deterministically prunes and compacts AI agent execution traces, with every pruned event recoverable via receipts.",
+    images: ["/logo_badge_flattened.png"],
   },
 };
 
